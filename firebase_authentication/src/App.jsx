@@ -7,6 +7,7 @@ import Login from "./components/login/Login";
 import ForgotPassword from "./components/forgot-password/ForgotPassword";
 import UpdateProfile from "./components/UpdateProfile";
 import Dashboard from "./components/Dashboard";
+import AuthProvider from "./context/AuthContext";
 
 const App = () => {
   return (
@@ -16,13 +17,15 @@ const App = () => {
     >
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Router>
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/update-profile" element={<UpdateProfile />} />
-            <Route path="/" element={<Dashboard />} />
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/update-profile" element={<UpdateProfile />} />
+              <Route path="/" element={<Dashboard />} />
+            </Routes>
+          </AuthProvider>
         </Router>
       </div>
     </Container>
