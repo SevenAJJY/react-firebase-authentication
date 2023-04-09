@@ -12,6 +12,8 @@ const Dashboard = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  console.log(currentUser);
+
   const handleLogout = async () => {
     try {
       await logout();

@@ -93,6 +93,7 @@
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: rgba(156, 163, 175, 1);
+    margin: 0 !important;
 }
 
 .social-icons {

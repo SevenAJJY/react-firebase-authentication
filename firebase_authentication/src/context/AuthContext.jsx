@@ -8,6 +8,10 @@ import {
   sendPasswordResetEmail,
   updateEmail,
   updatePassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  TwitterAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
 import auth from "../firebase";
 import { useEffect } from "react";
@@ -70,7 +74,38 @@ const AuthProvider = ({ children }) => {
   const updateUserPassword = (newPassword) => {
     return updatePassword(auth.currentUser, newPassword);
   };
+
+  /**
+   * Authenticate Using Google
+   * @returns {Promise<UserCredential>}
+   */
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
+  /**
+   * Authenticate Using Twitter
+   * @returns {Promise<UserCredential>}
+   */
+  const twitterSignIn = () => {
+    const provider = new TwitterAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
+  /**
+   * Authenticate Using Github
+   * @returns {Promise<UserCredential>}
+   */
+  const githubSignIn = () => {
+    const provider = new GithubAuthProvider();
+    return signInWithPopup(auth, provider);
+  };
+
   useEffect(() => {
+    /**
+     * Get the currently signed-in user {@link onAuthStateChanged}
+     */
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       setLoading(false);
@@ -90,6 +125,9 @@ const AuthProvider = ({ children }) => {
         resetPassword,
         updateUserEmail,
         updateUserPassword,
+        googleSignIn,
+        twitterSignIn,
+        githubSignIn,
       }}
     >
       {!loading && children}
