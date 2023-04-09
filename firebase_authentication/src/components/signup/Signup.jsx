@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const { signup } = useAuth();
@@ -12,20 +13,23 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
-  const CPassword = useRef();
+  const CPasswordRef = useRef();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    if (passwordRef.current.value === CPassword.current.value) {
-      setError("Passwords do not matche");
-    }
     e.preventDefault();
+    passwordRef.current.value !== CPasswordRef.current.value
+      ? setError("Passwords do not matche!")
+      : setError("");
     try {
-      setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-    } catch (error) {
+      navigate("/");
+    } catch (err) {
+      console.log(err);
       setError("Failed to create an account!");
     }
+
     setLoading(false);
   };
 
@@ -33,7 +37,7 @@ const Signup = () => {
     <div className="form-container">
       <p className="title">Sign up</p>
       {error && <Alert variant="danger">{error}</Alert>}
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={(e) => handleSubmit(e)}>
         <div className="input-group">
           <label htmlFor="email">Email</label>
           <input ref={emailRef} type="text" name="email" id="email" />
@@ -50,13 +54,13 @@ const Signup = () => {
         <div className="input-group mb-4">
           <label htmlFor="CPassword">Password</label>
           <input
-            ref={CPassword}
+            ref={CPasswordRef}
             type="password"
             name="CPassword"
             id="CPassword"
           />
         </div>
-        <button className="sign" disabled={loading}>
+        <button type="submit" className="sign" disabled={loading}>
           Sign up
         </button>
       </form>

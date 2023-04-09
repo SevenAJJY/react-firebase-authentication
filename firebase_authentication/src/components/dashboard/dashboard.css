@@ -1,0 +1,36 @@
+.form-container {
+    max-width: 360px;
+    border-radius: 0.75rem;
+    background-color: var(--p-color);
+    padding: 2rem;
+    color: rgba(243, 244, 246, 1);
+}
+
+.title {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    padding-left: 1.5rem;
+    border-left: 10px solid var(--s-color);
+}
+
+.logout {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.logout button {
+    background: rgb(255, 26, 26);
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.logout button:hover {
+    background: rgb(211, 9, 9);
+}

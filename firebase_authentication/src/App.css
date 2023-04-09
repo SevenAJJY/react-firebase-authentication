@@ -26,3 +26,23 @@ body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--text-color);
 }
+
+.alert {
+    position: relative;
+    padding: 1rem 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.alert-danger {
+    background: linear-gradient(87deg, red, transparent);
+    border: none !important;
+    color: #fff !important;
+}
+
+.alert-success {
+    background: linear-gradient(87deg, rgb(60, 255, 0), transparent);
+    border: none !important;
+    color: #fff !important;
+}
