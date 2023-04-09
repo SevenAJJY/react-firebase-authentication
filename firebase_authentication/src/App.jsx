@@ -8,6 +8,7 @@ import ForgotPassword from "./components/forgot-password/ForgotPassword";
 import UpdateProfile from "./components/UpdateProfile";
 import Dashboard from "./components/dashboard/Dashboard";
 import AuthProvider from "./context/AuthContext";
+import RequireAuth from "./context/RequireAuth";
 
 const App = () => {
   return (
@@ -23,7 +24,15 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/update-profile" element={<UpdateProfile />} />
-              <Route path="/" element={<Dashboard />} />
+              {/* Protected Route */}
+              <Route
+                path="/"
+                element={
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
+              />
             </Routes>
           </AuthProvider>
         </Router>
