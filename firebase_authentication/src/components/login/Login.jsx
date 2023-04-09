@@ -38,7 +38,7 @@ const Login = () => {
       <form className="form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="email">Email</label>
-          <input ref={emailRef} type="text" name="email" id="email" />
+          <input ref={emailRef} type="text" name="email" id="email" required />
         </div>
         <div className="input-group mb-1">
           <label htmlFor="password">Password</label>
@@ -48,6 +48,7 @@ const Login = () => {
             type="password"
             name="password"
             id="password"
+            required
           />
           <div className="forgot">
             <Link to="/forgot-password">Forgot Password ?</Link>

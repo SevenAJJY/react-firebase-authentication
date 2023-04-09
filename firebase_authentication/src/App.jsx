@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap";
 import Signup from "./components/signup/Signup";
 import Login from "./components/login/Login";
 import ForgotPassword from "./components/forgot-password/ForgotPassword";
-import UpdateProfile from "./components/UpdateProfile";
+import UpdateProfile from "./components/update-profile/UpdateProfile";
 import Dashboard from "./components/dashboard/Dashboard";
 import AuthProvider from "./context/AuthContext";
 import RequireAuth from "./context/RequireAuth";

@@ -1,14 +1,14 @@
 import React from "react";
 import { Alert, Card } from "react-bootstrap";
-import "./signup.css";
+import "./updateProfile.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Signup = () => {
-  const { signup } = useAuth();
+const UpdateProfile = () => {
+  const { updateUserEmail, updateUserPassword, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const emailRef = useRef();
@@ -16,35 +16,50 @@ const Signup = () => {
   const CPasswordRef = useRef();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    passwordRef.current.value !== CPasswordRef.current.value
-      ? setError("Passwords do not matche!")
-      : setError("");
-    try {
+    if (passwordRef.current.value === CPasswordRef.current.value) {
+      const promises = [];
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-      setError("Failed to create an account!");
-    }
+      setError("");
+      if (emailRef.current.value !== currentUser.email) {
+        promises.push(updateUserEmail(emailRef.current.values));
+      }
 
-    setLoading(false);
+      if (passwordRef.current.value) {
+        promises.push(updateUserPassword(passwordRef.current.values));
+      }
+
+      Promise.all(promises)
+        .then((response) => {
+          navigate("/");
+        })
+        .catch((er) => {
+          setError("Failed to update account");
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setError("Passwords do not matche!");
+    }
   };
 
   return (
     <div className="form-container">
-      <p className="title">Sign up</p>
-      {error && (
-        <div className="alert alert-danger" variant="danger">
-          {error}
-        </div>
-      )}
+      <p className="title">Update profile</p>
+      {error && <div className="alert alert-danger">{error}</div>}
       <form className="form" onSubmit={(e) => handleSubmit(e)}>
         <div className="input-group">
           <label htmlFor="email">Email</label>
-          <input ref={emailRef} type="text" name="email" id="email" required />
+          <input
+            ref={emailRef}
+            type="text"
+            name="email"
+            id="email"
+            defaultValue={currentUser?.email}
+            required
+          />
         </div>
         <div className="input-group">
           <label htmlFor="password">Password</label>
@@ -53,7 +68,6 @@ const Signup = () => {
             type="password"
             name="password"
             id="password"
-            required
           />
         </div>
         <div className="input-group mb-4">
@@ -63,18 +77,17 @@ const Signup = () => {
             type="password"
             name="CPassword"
             id="CPassword"
-            required
           />
         </div>
         <button type="submit" className="sign" disabled={loading}>
-          Sign up
+          Update
         </button>
       </form>
       <p className="signup mt-4">
-        Already have an account ?<Link to="/login"> Sign in</Link>
+        <Link to="/"> Cancel</Link>
       </p>
     </div>
   );
 };
 
-export default Signup;
+export default UpdateProfile;
