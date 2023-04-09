@@ -1,19 +1,54 @@
-import React from "react";
+import { React, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./login.css";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
 
 const Login = () => {
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.path || "/";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+      navigate(redirectPath, { replace: true });
+    } catch (err) {
+      setError("Failed to Log In");
+    }
+    setLoading(false);
+  };
   return (
     <div className="form-container">
       <p className="title">Login</p>
-      <form className="form">
+      {error && (
+        <div className="alert alert-danger" variant="danger">
+          {error}
+        </div>
+      )}
+      <form className="form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="email">Email</label>
-          <input type="text" name="email" id="email" placeholder="" />
+          <input ref={emailRef} type="text" name="email" id="email" />
         </div>
         <div className="input-group mb-1">
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" placeholder="" />
+          <input
+            disabled={loading}
+            ref={passwordRef}
+            type="password"
+            name="password"
+            id="password"
+          />
           <div className="forgot">
             <Link to="/forgot-password">Forgot Password ?</Link>
           </div>

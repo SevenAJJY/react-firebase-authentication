@@ -36,7 +36,11 @@ const Signup = () => {
   return (
     <div className="form-container">
       <p className="title">Sign up</p>
-      {error && <Alert variant="danger">{error}</Alert>}
+      {error && (
+        <div className="alert alert-danger" variant="danger">
+          {error}
+        </div>
+      )}
       <form className="form" onSubmit={(e) => handleSubmit(e)}>
         <div className="input-group">
           <label htmlFor="email">Email</label>

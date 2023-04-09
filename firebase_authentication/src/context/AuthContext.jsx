@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import auth from "../firebase";
 import { useEffect } from "react";
@@ -18,16 +19,26 @@ const AuthProvider = ({ children }) => {
    * To create a new account you must pass the new user's email address and password createUserWithEmailAndPassword();
    * @param email - The user's email address.
    * @param password - The user's chosen password.
+   * @returns {Promise<UserCredential>}
    */
   const signup = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
   /**
    * Signs out the current user.
-   * @returns {Promise}
+   * @returns {Promise<*>}
    */
   const logout = () => {
     return signOut(auth);
+  };
+  /**
+   * When a user signs in to your app, pass the user's email address and password to {@link signInWithEmailAndPassword}
+   * @param email - The user's email address.
+   * @param password - The user's chosen password.
+   * @returns {Promise<UserCredential>}
+   */
+  const login = (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -40,7 +51,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ currentUser, signup, logout }}>
+    <AuthContext.Provider value={{ currentUser, signup, logout, login }}>
       {!loading && children}
     </AuthContext.Provider>
   );
