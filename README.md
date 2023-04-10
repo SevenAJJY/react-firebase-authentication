@@ -3,12 +3,12 @@
 React Authentication With Firebase And Routing
 
 
-Put your credentials to <pre><code>.env</code></pre>.
+Put your credentials to  `.env` .
 
 
-Run<pre><code>pnpm dev</code></pre>to start application.
 
-Use the `printf()` function.
+
+Run `pnpm dev` to start application.
 
 ----
 
