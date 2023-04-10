@@ -1,17 +1,17 @@
 # react-firebase-authentication
+
 React Authentication With Firebase And Routing
+
 
 ---- 
 
-Put your credentials to <pre><code>
+<pre>Put your credentials to <code>
 .env
-</code></pre>.
+</code>.</pre>
 
 ----
 
-Run<pre><code>
-pnpm dev
-</code></pre>to start application.
+<pre>Run<code>pnpm dev</code>to start application.</pre>
 
 ----
 
